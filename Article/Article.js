@@ -112,78 +112,65 @@ const data = [
     <p class="date">{date of the article}</p>
 
     {three separate paragraph elements} */
+window.addEventListener('load', (event) => {
+	function articleComponent(title, date, firstParagraph, secondParagraph, thirdParagraph) {
+		let articleDiv = document.createElement('div');
+		let articleHeading = document.createElement('h2');
+		let datePara = document.createElement('p');
+		let para1 = document.createElement('p');
+		let para2 = document.createElement('p');
+		let para3 = document.createElement('p');
+		let span = document.createElement('span');
 
-function articleComponent(title, date, firstParagraph, secondParagraph, thirdParagraph) {
-	let articleDiv = document.createElement('div');
-	let articleHeading = document.createElement('h2');
-	let datePara = document.createElement('p');
-	let para1 = document.createElement('p');
-	let para2 = document.createElement('p');
-	let para3 = document.createElement('p');
-	let span = document.createElement('span');
+		//Setting up Structure of the elements
+		articleDiv.appendChild(articleHeading);
+		articleDiv.appendChild(datePara);
+		articleDiv.appendChild(para1);
+		articleDiv.appendChild(para2);
+		articleDiv.appendChild(para3);
+		articleDiv.appendChild(span);
 
-	//Setting up Structure of the elements
-	articleDiv.appendChild(articleHeading);
-	articleDiv.appendChild(datePara);
-	articleDiv.appendChild(para1);
-	articleDiv.appendChild(para2);
-	articleDiv.appendChild(para3);
-	articleDiv.appendChild(span);
+		// Setting class names
+		articleDiv.classList.add('article');
+		datePara.classList.add('date');
+		span.classList.add('expandButton');
 
-	// Setting class names
-	articleDiv.classList.add('article');
-	datePara.classList.add('date');
-	span.classList.add('expandButton');
+		// Setting text content/img src
 
-	// Setting text content/img src
+		articleHeading.textContent = title;
+		datePara.textContent = date;
+		para1.textContent = firstParagraph;
+		para2.textContent = secondParagraph;
+		para3.textContent = thirdParagraph;
+		span.textContent = '🗱';
+		span.style.fontSize = '150%';
+		span.style.margin = 'auto';
 
-	articleHeading.textContent = title;
-	datePara.textContent = date;
-	para1.textContent = firstParagraph;
-	para2.textContent = secondParagraph;
-	para3.textContent = thirdParagraph;
-	span.textContent = '🗱';
-	span.style.fontSize = '250%';
+		//Adding event listener to the expandButton span this event listener checks with classList any class listed on span and will toggle
+		//off and on using article-open and will toggle to close
+		span.addEventListener('click', () => {
+			articleDiv.classList.toggle('article-open');
+		});
 
-	//Adding event listener to the expandButton span this event listener checks with classList any class listed on span and will toggle
-	//off and on using article-open and will toggle to close
-	span.addEventListener('click', () => {
-		articleDiv.classList.toggle('article-open');
+		return articleDiv;
+	}
+
+	const articles = document.querySelector('.articles');
+
+	const newArticles = data.map((article) => {
+		const newArticle = articleComponent(
+			article.title,
+			article.date,
+			article.firstParagraph,
+			article.secondParagraph,
+			article.thirdParagraph
+		);
+		console.log(newArticle);
+		return newArticle;
 	});
+	console.log(newArticles);
 
-	return articleDiv;
-}
-
-const articles = document.querySelector('.articles');
-
-const newArticles = data.map((article) => {
-	const newArticle = articleComponent(
-		article.title,
-		article.date,
-		article.firstParagraph,
-		article.secondParagraph,
-		article.thirdParagraph
-	);
-	console.log(newArticle);
-	return newArticle;
+	newArticles.forEach((newArticle) => {
+		articles.appendChild(newArticle);
+	});
 });
-console.log(newArticles);
-
-newArticles.forEach((newArticle) => {
-	articles.appendChild(newArticle);
-});
-
-//  <span class='expandButton'></span>
-//   </div>
-
-//   Hint: You will need to use createElement more than once here!
-
-//   Your function should take either an object as it's one argument, or 5 separate arguments mapping to each peice of the data object above.
-
-//   Step 2: Add an event listener to the expandButton span. This event listener should toggle the class 'article-open' on the 'article' div.
-
-//   Step 3: return the entire component.
-
-//   Step 4: Map over the data, creating a component for each oject and add each component to the DOM as children of the 'articles' div.
-
-//   Step 5: Add a new article to the array. Make sure it is in the same format as the others. Refresh the page to see the new artible*/
